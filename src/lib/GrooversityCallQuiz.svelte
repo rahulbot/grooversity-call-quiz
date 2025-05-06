@@ -8,7 +8,7 @@
   import Practice from "./Practice.svelte";
   import buildQuiz from "./data/logic.js";
 
-  const QUESTIONS_PER_ROUND = 6;
+  const QUESTIONS_PER_ROUND = 2;
 
   let currentScreen = $state("intro");
   let onQuestionIndex = $state(0);

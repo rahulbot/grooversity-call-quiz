@@ -7,7 +7,7 @@
 
 <h1>Round Over</h1>
 <h2>You got {countRight}/{results.length} right</h2>
-<Score {results} size=40 />
+<Score {results} size=40 asEmoji={true} />
 
 <button type="button" class="button" onclick={() => goto("intro")}>Start Over</button>
 
