@@ -15,11 +15,7 @@
   let duration = null;
   let earnedPoints = 0;
 
-  var songHeadClip = new Howl({
-    src: [`audio/${question.song.src}`],
-    loop: true,
-    volume: 1,
-  });
+  var songHeadClip;
  
   function playAnswerFeedback() {
     const clipFileName = isCorrect ? 'right.mp3' : 'wrong.mp3';
@@ -31,6 +27,13 @@
   }
 
   function handlePlay(evt) {
+    if (!songHeadClip) {
+      new Howl({
+        src: [`audio/${question.song.src}`],
+        loop: true,
+        volume: 1,
+      });
+    } 
     if (songHeadClip.playing()) {
       songHeadClip.pause();
       isPlaying = false;
