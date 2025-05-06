@@ -7,7 +7,7 @@
 <div class="results">
   {#each results as result, index}
     <div class="icon">
-      {#if (index == currentIndex) && (results == null) }
+      {#if (index == currentIndex) && (result == null) }
         <FilledCircle {size} color={'rgb(245, 228, 0)'} />
       {:else if result === null}
         <EmptyCircle {size} />

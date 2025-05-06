@@ -4,7 +4,7 @@
 </script>
 
 <h2>Results so far</h2>
-<Score {results} size=40 {currentIndex} />
+<Score {results} size=40 />
 
 <button class="button" onclick={() => goto("play-call")}>
   Next
