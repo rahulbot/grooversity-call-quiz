@@ -20,7 +20,12 @@
     });
     clip.play();
   }
-
+  function startQuiz() {
+    if (clip) {
+      clip.stop();
+    }
+    goto('intro');
+  }
 </script>
 
 <h1>Practice Room</h1>
@@ -36,7 +41,7 @@
   {/each}
 </div>
 
-<button type="button" class="button" onclick={() => goto('countdown')}>Start the Quiz</button>
+<button type="button" class="button" onclick={startQuiz}>Start the Quiz</button>
 
 <style>
   .secondary {
