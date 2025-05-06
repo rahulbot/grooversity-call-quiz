@@ -72,9 +72,9 @@
 
 <button id="play" onclick={handlePlay} class:playing={isPlaying}>
   {#if isPlaying }
-    <PauseFill size=120 />
+    <PauseFill size=80 />
   {:else}
-    <PlayIcon size=120 />
+    <PlayIcon size=80 />
   {/if}
 </button>
 

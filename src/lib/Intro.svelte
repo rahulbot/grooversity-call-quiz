@@ -5,8 +5,8 @@
 
 <h1>Grooversity Call Quiz</h1>
 
-<h2>Hear the call, guess the song.</h2>
-<p>The faster you get it right, the more points you get. Turn up the volume 🪘🔊</p>
+<h2>Hear the call,<br />guess the song.</h2>
+<p>Turn up the volume 🪘🔊</p>
 
 <button type="button" class="button fade-background" onclick={() => goto("countdown")}>Start the Quiz!</button>
 
@@ -17,7 +17,7 @@
   }
 
   h2, p {
-    margin: 3rem 2rem;
+    margin: 2rem 0;
   }
 
   .fade-background {
