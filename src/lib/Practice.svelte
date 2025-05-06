@@ -36,7 +36,7 @@
   {#each songs as song}
     <button type="button" class="button secondary" onclick={() => playPause(song.src)}
       class:playing={selectedSongSrc == song.src}>
-      {song.name} {clip && clip.playing() && selectedSongSrc == song.src}
+      {song.name}
     </button>
   {/each}
 </div>

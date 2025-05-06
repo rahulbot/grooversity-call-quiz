@@ -14,11 +14,11 @@
   let duration = null;
   let earnedPoints = 0;
 
-  var songHeadClip;
+  let songHeadClip;
  
   function playAnswerFeedback() {
     const clipFileName = isCorrect ? 'right.mp3' : 'wrong.mp3';
-    var sound = new Howl({
+    let sound = new Howl({
       src: [`audio/${clipFileName}`],
       volume: 1
     });
