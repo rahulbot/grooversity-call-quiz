@@ -5,6 +5,7 @@
   import Score from "./Score.svelte";
   import InterimResults from "./InterimResults.svelte";
   import RoundSummary from "./RoundSummary.svelte";
+  import Practice from "./Practice.svelte";
   import buildQuiz from "./data/logic.js";
 
   const QUESTIONS_PER_ROUND = 6;
@@ -38,22 +39,24 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-lg-6 offset-lg-3">
+      <div class="col-lg-4 offset-lg-4">
         
-        {#if currentScreen === "intro"}
+        {#if currentScreen == "intro"}
           <Intro {goto} />
-        {:else if currentScreen === "countdown"}
+        {:else if currentScreen == "countdown"}
           <Countdown {goto} />
-        {:else if currentScreen === "interim-results"}
+        {:else if currentScreen == "interim-results"}
           <InterimResults {results} {goto} currentIndex={onQuestionIndex} />
-        {:else if currentScreen === "play-call"}
+        {:else if currentScreen == "play-call"}
           <Score {results} size=15 currentIndex={onQuestionIndex} />
           <PlayCall {goto} {updateScore}
             question={quiz[onQuestionIndex]}
             questionNumber={onQuestionIndex}
             totalQuestions={QUESTIONS_PER_ROUND} />
-        {:else if currentScreen === "round-over"}
+        {:else if currentScreen == "round-over"}
           <RoundSummary {results} {goto} />
+        {:else if currentScreen == "practice" }
+          <Practice {goto} />
         {:else}
           Invalid
         {/if}

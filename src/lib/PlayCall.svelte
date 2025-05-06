@@ -1,6 +1,5 @@
 <script>
   import { Howl } from 'howler';
-  import { onMount } from 'svelte';
   import { fade } from 'svelte/transition';
   import PlayIcon from './icons/PlayFillIcon.svelte';
   import PauseFill from './icons/PauseFill.svelte';
@@ -61,7 +60,7 @@
     }
     duration = Date.now() - startTime;
     if (songHeadClip.playing()) {
-      songHeadClip.volume(0.5);
+      songHeadClip.volume(0.4);
     }
     pickedAnswerIdx = evt.target.getAttribute("data-idx");
     isCorrect = pickedAnswerIdx == question.correctIndex;
@@ -142,6 +141,7 @@
       text-align: center;
 
       input[type="radio"] {
+        display: none;
         opacity: 0.01;
         z-index: 100;
       }
@@ -163,5 +163,9 @@
     
     }
 
+  }
+
+  .button {
+    margin-bottom: 15px;
   }
 </style>

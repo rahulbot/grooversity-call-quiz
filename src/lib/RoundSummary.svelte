@@ -9,7 +9,7 @@
 <h2>You got {countRight}/{results.length} right</h2>
 <Score {results} size=40 />
 
-<button type="button" class="button" onclick={() => goto("intro")}>Play Again</button>
+<button type="button" class="button" onclick={() => goto("intro")}>Start Over</button>
 
 <style>
   h1 {

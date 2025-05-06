@@ -44,5 +44,13 @@ p {
   padding: 1rem 2rem;
   font-family: AlphaEcho, sans-serif;
   background-color: var(--secondary-color);
-  border: 0.5rem solid var(--foreground-color);
+  border: 10px solid var(--foreground-color);
+  margin-bottom: 40px;
+}
+
+.secondary {
+  background-color: #000;
+  border: 2px solid var(--secondary-color);
+  color: var(--primary-color);
+  font-size: 1.25rem;
 }

@@ -10,6 +10,8 @@
 
 <button type="button" class="button fade-background" onclick={() => goto("countdown")}>Start the Quiz!</button>
 
+<button type="button" class="button secondary" onclick={() => goto('practice')}>practice some more</button>
+
 <style>
   h1 {
     margin: 3rem 0;
