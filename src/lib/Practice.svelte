@@ -20,12 +20,12 @@
     clip = new Howl({
       src: [`audio/${mp3FileName}`],
       volume: 1,
-      onend: () => selectedSongSrc = null
+      html5: true,
     });
     clip.play();
   }
   function startQuiz() {
-    if (clip) {
+    if (clip && clip.playing()) {
       clip.stop();
     }
     goto('intro');

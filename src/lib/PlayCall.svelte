@@ -18,11 +18,12 @@
  
   function playAnswerFeedback() {
     const clipFileName = isCorrect ? 'right.mp3' : 'wrong.mp3';
-    let sound = new Howl({
+    let soundEffect = new Howl({
       src: [`audio/${clipFileName}`],
-      volume: 1
+      volume: 1,
+      html5: true,
     });
-    sound.play();
+    soundEffect.play();
   }
 
   function handlePlay(evt) {
@@ -31,6 +32,7 @@
         src: [`audio/${question.song.src}`],
         loop: true,
         volume: 1,
+        html5: true,
       });
     }
     if (songHeadClip.playing()) {
