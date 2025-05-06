@@ -27,13 +27,13 @@
   }
 
   function handlePlay(evt) {
-    if (!songHeadClip) {
-      new Howl({
+    if (!songHeadClip) { // important lazy load for iOS playing
+      songHeadClip = new Howl({
         src: [`audio/${question.song.src}`],
         loop: true,
         volume: 1,
       });
-    } 
+    }
     if (songHeadClip.playing()) {
       songHeadClip.pause();
       isPlaying = false;
