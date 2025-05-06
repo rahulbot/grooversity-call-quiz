@@ -1,10 +1,38 @@
 <script>
-    let { goto } = $props();
+  let { goto } = $props();
 </script>
 
-<h1>Grooversity Quiz Time</h1>
 
-<p>Test your knowledge. Hear the call, guess the song. The faster you get it right, the more points you get.</p>
-<p>Tip: turn up the volume!</p>
+<h1>Grooversity Call Quiz</h1>
 
-<button type="button" class="btn btn-primary" onclick={() => goto("countdown")}>Go</button>
+<h2>Hear the call, guess the song.</h2>
+<p>The faster you get it right, the more points you get. Turn up the volume 🪘🔊</p>
+
+<button type="button" class="button fade-background" onclick={() => goto("countdown")}>Start the Quiz!</button>
+
+<style>
+  h1 {
+    margin: 3rem 0;
+    padding: 0px;
+  }
+
+  h2, p {
+    margin: 3rem 2rem;
+  }
+
+  .fade-background {
+    animation: fadeOpacity 1s infinite;
+  }
+
+  @keyframes fadeOpacity {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.75;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+</style>

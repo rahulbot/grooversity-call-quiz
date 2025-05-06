@@ -1,35 +1,45 @@
 <script>
   import { Howl } from 'howler';
-  import { fade } from 'svelte/transition';
   import { onMount } from 'svelte';
+  import { fade } from 'svelte/transition';
+  import PlayIcon from './icons/PlayFillIcon.svelte';
+  import PauseFill from './icons/PauseFill.svelte';
+
   let { goto, question, updateScore, questionNumber, totalQuestions } = $props();
 
   let showAnswers = $state(false);
-  let pickedAnswer = $state(null);
+  let pickedAnswerIdx = $state(null);
   let isCorrect = $state(null);
+  let isPlaying = $state(false);
   let startTime = null;
   let duration = null;
   let earnedPoints = 0;
 
   var songHeadClip = new Howl({
     src: [`audio/${question.song.src}`],
+    loop: true,
     volume: 1,
   });
  
   function playAnswerFeedback() {
     const clipFileName = isCorrect ? 'right.mp3' : 'wrong.mp3';
-    console.log(clipFileName);
     var sound = new Howl({
       src: [`audio/${clipFileName}`],
-      volume: 1,
+      volume: 1
     });
     sound.play();
   }
 
   function handlePlay(evt) {
-    songHeadClip.play();
-    showAnswers = true
-    startTime = Date.now();
+    if (songHeadClip.playing()) {
+      songHeadClip.pause();
+      isPlaying = false;
+    } else {
+      songHeadClip.play();
+      isPlaying = true;
+      showAnswers = true;
+      startTime = Date.now();
+    }
   }
 
   function durationToPoints(duration) {
@@ -43,25 +53,33 @@
   }
 
   function handleAnswer(evt) {
+    if (pickedAnswerIdx) {
+      return;
+    }
     duration = Date.now() - startTime;
     if (songHeadClip.playing()) {
       songHeadClip.volume(0.5);
     }
-    pickedAnswer = evt.target.getAttribute("data-idx");
-    isCorrect = pickedAnswer == question.correctIndex;
+    pickedAnswerIdx = evt.target.getAttribute("data-idx");
+    isCorrect = pickedAnswerIdx == question.correctIndex;
     earnedPoints = isCorrect ? durationToPoints(duration) : 0;
     playAnswerFeedback();
-    updateScore(earnedPoints);
+    updateScore(isCorrect);
+    evt.preventDefault();
   }
- </script>
+</script>
 
-<h1>Question {questionNumber + 1} of {totalQuestions}</h1>
 
-<button onclick={handlePlay}>play</button>
-
-<br /><br /><br />
+<button id="play" onclick={handlePlay} class:playing={isPlaying}>
+  {#if isPlaying }
+    <PauseFill size=120 />
+  {:else}
+    <PlayIcon size=120 />
+  {/if}
+</button>
 
 {#if showAnswers}
+  <h3>Which song is it?</h3>
   <div transition:fade>
     <ul class="answers">
     {#each question.answers as answer, i}
@@ -69,68 +87,78 @@
         <input type="radio" name="answer" value={answer} id={answer}
           onclick={handleAnswer}
           data-idx={i}
-          disabled={pickedAnswer ? true : false}
+          disabled={pickedAnswerIdx ? true : false}
           />
-        <label for={answer}>{answer}</label>
+        <label for={answer} class="button" class:disabled={pickedAnswerIdx!=null} class:picked={pickedAnswerIdx==i}>
+          {#if pickedAnswerIdx!=null}
+            {#if i == question.correctIndex}
+              <span>✅</span>
+            {:else}
+              <span>❌</span>
+            {/if}
+          {/if}
+          {answer}
+        </label>
       </li>
     {/each}
   </div>
 {/if}
 
-{#if pickedAnswer}
+{#if pickedAnswerIdx}
   <div transition:fade>
-    {#if isCorrect}
-      <p>Correct!</p>
-      <p>You answered in {(duration / 1000).toFixed(1)} seconds, earning {durationToPoints(duration)} points.</p>
+    <button class="button" onclick={() => {songHeadClip.stop(); goto("interim-results");}}>
+      {#if isCorrect}
+        Yay 😍
       {:else}
-      <p>Wrong! The correct answer was {question.answers[question.correctIndex]}</p>
-      <p>You earned 0 points</p>
-    {/if}
-    <button onclick={() => {songHeadClip.stop(); goto("countdown");}}>Next</button>
+        Darn 😬
+      {/if}
+    </button>
   </div>
 {/if}
 
 <style>
-.answers {
-  list-style-type: none;
-  margin: 25px 0 0 0;
-  padding: 0;
-
-  li {
-    float: left;
-    margin: 0 5px 0 0;
-    width: 100px;
-    height: 40px;
-    position: relative;
+  #play {
+    margin: 1rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--secondary-color);
+    border: 0px;
+    padding: 2rem;
+    font-family: AlphaEcho, sans-serif;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    text-align: center;
   }
+    
+  .answers {
+    list-style-type: none;
+    padding: 0;
 
-  label, input {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
+    li {
+      text-align: center;
 
-  input[type="radio"] {
-    opacity: 0.01;
-    z-index: 100;
-  }
+      input[type="radio"] {
+        opacity: 0.01;
+        z-index: 100;
+      }
 
-  input[type="radio"]:checked+label {
-    background: yellow;
-  }
+      label {
+        padding: 5px;
+        border: 1px solid #CCC;
+        cursor: pointer;
+        z-index: 90;
+        &.disabled {
+          background-color: #000;
+        }
+        &.picked {
+          background-color: var(--primary-color);
+          color: var(--secondary-color);
+        }
+      }
+    
+    
+    }
 
-  label {
-    padding: 5px;
-    border: 1px solid #CCC;
-    cursor: pointer;
-    z-index: 90;
   }
-
-  label:hover {
-    background: #DDD;
-  }
-}
 </style>
