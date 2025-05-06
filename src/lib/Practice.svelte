@@ -7,12 +7,16 @@
   let clip;
 
   function playPause(mp3FileName) {
-    selectedSongSrc = mp3FileName;
     if (clip) {
       if (clip.playing()) {
         clip.stop();
       }
     }
+    if (selectedSongSrc == mp3FileName) {
+      selectedSongSrc = null;
+      return;
+    }
+    selectedSongSrc = mp3FileName;
     clip = new Howl({
       src: [`audio/${mp3FileName}`],
       volume: 1,
