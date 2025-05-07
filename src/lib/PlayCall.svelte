@@ -111,11 +111,7 @@
 {#if pickedAnswerIdx}
   <div transition:fade>
     <button class="button" onclick={() => {songHeadClip.stop(); goto("interim-results");}}>
-      {#if isCorrect}
-        Yay 😍
-      {:else}
-        Darn 😬
-      {/if}
+      Next
     </button>
   </div>
 {/if}
